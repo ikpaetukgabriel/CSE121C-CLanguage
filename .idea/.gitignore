@@ -6,3 +6,12 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+.DS_Store
+.idea/CSE121C.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+CMakeLists.txt
+cmake-build-debug/
+

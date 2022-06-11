@@ -16,11 +16,11 @@ int main() {
     printf("Enter a floating point number: ");
     scanf("%f", &sampleFloat);
 
-//    show as scientific notation
+    //    show as scientific notation
     printf("You entered -> %e\n", sampleFloat);
-//    show as fixed point
+    //    show as fixed point
     printf("You entered -> %f\n", sampleFloat);
-//    show as shortest representation
+    //    show as shortest representation
     printf("You entered -> %g\n", sampleFloat);
 
     struct account {

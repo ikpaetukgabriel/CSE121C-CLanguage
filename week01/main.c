@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int main() {
     char characterSample = 'G';
@@ -18,6 +19,28 @@ int main() {
 //    show as scientific notation
     printf("You entered -> %e\n", sampleFloat);
 //    show as fixed point
-    printf("You entered -> %e\n", sampleFloat);
+    printf("You entered -> %f\n", sampleFloat);
+//    show as shortest representation
+    printf("You entered -> %g\n", sampleFloat);
+
+    struct account {
+        char name[20];
+        int accountNumber;
+        double accountBalance;
+    };
+
+    struct account checking;
+
+    //    To copy the content into the array, you need to use strcpy() from string.h
+    strcpy(checking.name, "Adam Young");
+    checking.accountNumber = 123456;
+    checking.accountBalance = 1234.56;
+
+    printf("Account name: %s, size: %zu\n", checking.name, sizeof(checking.name));
+    printf("Account number : %d, size: %zu\n", checking.accountNumber, sizeof(checking.accountNumber));
+    printf("Account balance: %lg, size: %zu\n", checking.accountBalance, sizeof(checking.accountBalance));
+
+    printf("Total size of the structure: %zu\n", sizeof(checking));
+
     return 0;
 }

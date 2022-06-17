@@ -23,3 +23,6 @@ cmake-build-debug/
 /.idea/CSE121C.iml
 /.idea/vcs.xml
 /.idea/workspace.xml
+
+# videos
+.mov

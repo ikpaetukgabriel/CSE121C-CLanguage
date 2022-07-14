@@ -19,7 +19,7 @@ void display_all_account_info(struct account *ptr_struct_account_head);
 
 struct account *find_account_by_account_number(struct account *ptr_struct_account_head);
 
-void add_a_new_account_if_head_is_not_null(struct account *ptr_struct_account_head, struct account *ptr_new_account);
+struct account * add_a_new_account(struct account *ptr_struct_account_head);
 
 int display_menu();
 
@@ -30,31 +30,26 @@ int main() {
     do {
         menu_choice = display_menu();
         printf("\n");
+        // Quits the menu
         if (menu_choice == 0) {
             printf("Bye\n");
             break;
         }
-
+        // Displays all the account details
         if (menu_choice == 2) {
             display_all_account_info(head);
             continue;
         }
-
+        // Finds account by account number and displays it
         if (menu_choice == 3) {
             struct account *search_result = find_account_by_account_number(head);
-            search_result == NULL ? printf("Account not found.") : display_account_info(search_result);
+            search_result == NULL ? printf("Account not found.\n") : display_account_info(search_result);
             continue;
         }
 
-        struct account *ptr_new_account = allocate_space_for_new_account();
-        populate_account_info(ptr_new_account);
-        if (head == NULL) {
-            head = ptr_new_account;
-        } else {
-            add_a_new_account_if_head_is_not_null(head, ptr_new_account);
-        }
+        head = add_a_new_account(head);
         printf("\n");
-    } while (1);
+    } while (true);
 
 
 
@@ -89,6 +84,7 @@ int display_menu() {
     printf("  1. Add account\n"
            "  2. Display all accounts\n"
            "  3. Find account\n"
+           "  4. Change account\n"
            "  0. Quit program\n");
     printf("Your choice: ");
     scanf("%d", &menu_choice);
@@ -101,13 +97,13 @@ struct account *allocate_space_for_new_account() {
 }
 
 struct account *find_account_by_account_number(struct account *ptr_struct_account_head) {
-    int acc_to_search_By;
+    int account_number;
     printf("Enter the account number to find: ");
-    scanf("%d", &acc_to_search_By);
+    scanf("%d", &account_number);
 
     struct account *current_account = ptr_struct_account_head;
     while (current_account != NULL) {
-        if (current_account->account_number == acc_to_search_By) {
+        if (current_account->account_number == account_number) {
             display_account_info(current_account);
             printf("\n");
             return current_account;
@@ -126,10 +122,20 @@ void display_all_account_info(struct account *ptr_struct_account_head) {
     }
 }
 
-void add_a_new_account_if_head_is_not_null(struct account *ptr_struct_account_head, struct account *ptr_new_account) {
+struct account * add_a_new_account(struct account *ptr_struct_account_head) {
+    if (ptr_struct_account_head == NULL) {
+        ptr_struct_account_head = allocate_space_for_new_account();
+        populate_account_info(ptr_struct_account_head);
+        return ptr_struct_account_head;
+    }
+
+    struct account *ptr_new_account = allocate_space_for_new_account();
+    populate_account_info(ptr_new_account);
+
     struct account *current_account = ptr_struct_account_head;
     while (current_account->ptr_acc) {
         current_account = current_account->ptr_acc;
     }
     current_account->ptr_acc = ptr_new_account;
+    return ptr_struct_account_head;
 }

@@ -23,6 +23,8 @@ struct account *add_a_new_account(struct account *ptr_struct_account_head);
 
 void update_an_existing_account(struct account *ptr_struct_account_head);
 
+void free_linked_list_pointers(struct account *ptr_struct_account_head);
+
 int display_menu();
 
 int main() {
@@ -32,11 +34,14 @@ int main() {
     do {
         menu_choice = display_menu();
         printf("\n");
-        // Quits the menu
-        if (menu_choice == 0) {
-            printf("Bye\n");
-            break;
+
+        // Add a new account
+        if (menu_choice == 1) {
+            ptr_head = add_a_new_account(ptr_head);
+            printf("\n");
+            continue;
         }
+
         // Displays all the account details
         if (menu_choice == 2) {
             display_all_account_info(ptr_head);
@@ -56,18 +61,21 @@ int main() {
             continue;
         }
 
-        ptr_head = add_a_new_account(ptr_head);
-        printf("\n");
+        // free up the memory used by the record and Quits the program
+        free_linked_list_pointers(ptr_head);
+        printf("Bye\n");
+        break;
+
     } while (true);
-
-
-
-//    free up the memory used by the record.
-//    free(ptr_first_account);
 
     return 0;
 }
 
+/**
+ * Populates an account detail
+ * @param struct_account
+ * @param is_a_new_account
+ */
 void populate_account_info(struct account *struct_account, bool is_a_new_account) {
     if (is_a_new_account) {
         struct_account->ptr_acc = NULL;
@@ -82,6 +90,10 @@ void populate_account_info(struct account *struct_account, bool is_a_new_account
     scanf("%f", &struct_account->account_balance);
 }
 
+/**
+ * Displays an account info
+ * @param ptr_struct_account
+ */
 void display_account_info(struct account *ptr_struct_account) {
     printf("Account information->\n");
     printf("number: %d\n", ptr_struct_account->account_number);
@@ -89,6 +101,10 @@ void display_account_info(struct account *ptr_struct_account) {
     printf("balance: $%lg\n", ptr_struct_account->account_balance);
 }
 
+/**
+ * Displays the menu, and prompts the user for a menu choice
+ * @return user menu choice(int)
+ */
 int display_menu() {
     int menu_choice;
     printf("  1. Add account\n"
@@ -101,11 +117,20 @@ int display_menu() {
     return menu_choice;
 }
 
+/***
+ * Dynamically allocate memory using malloc to be used to store one bank account record
+ * @return the pointer to the dynamically allocated memory
+ */
 struct account *allocate_space_for_new_account() {
-    // Dynamically allocate memory using malloc to be used to store one bank account record
     return malloc(sizeof(struct account));
 }
 
+/***
+ * Finds an account by the account number, if it
+ * does not exist return NULL
+ * @param ptr_struct_account_head
+ * @return struct account pointer
+ */
 struct account *find_account_by_account_number(struct account *ptr_struct_account_head) {
     int account_number;
     printf("Enter the account number to find: ");
@@ -121,6 +146,10 @@ struct account *find_account_by_account_number(struct account *ptr_struct_accoun
     return NULL;
 }
 
+/***
+ * display an account info
+ * @param ptr_struct_account_head
+ */
 void display_all_account_info(struct account *ptr_struct_account_head) {
     struct account *current_account = ptr_struct_account_head;
     while (current_account != NULL) {
@@ -130,6 +159,11 @@ void display_all_account_info(struct account *ptr_struct_account_head) {
     }
 }
 
+/***
+ *  adds a new account
+ * @param ptr_struct_account_head
+ * @return
+ */
 struct account *add_a_new_account(struct account *ptr_struct_account_head) {
     if (ptr_struct_account_head == NULL) {
         ptr_struct_account_head = allocate_space_for_new_account();
@@ -148,6 +182,10 @@ struct account *add_a_new_account(struct account *ptr_struct_account_head) {
     return ptr_struct_account_head;
 }
 
+/***
+ * Updates an existing account
+ * @param ptr_struct_account_head
+ */
 void update_an_existing_account(struct account *ptr_struct_account_head) {
     struct account *search_result = find_account_by_account_number(ptr_struct_account_head);
     if (search_result == NULL) {
@@ -158,4 +196,19 @@ void update_an_existing_account(struct account *ptr_struct_account_head) {
     printf("\n");
     printf("Now enter the new account information.\n");
     populate_account_info(search_result, false);
+}
+
+/**
+ * Frees up the pointers in the linked list
+ * @param ptr_struct_account_head
+ */
+void free_linked_list_pointers(struct account *ptr_struct_account_head) {
+    struct account* tmp;
+
+    while (ptr_struct_account_head != NULL)
+    {
+        tmp = ptr_struct_account_head;
+        ptr_struct_account_head = ptr_struct_account_head->ptr_acc;
+        free(tmp);
+    }
 }

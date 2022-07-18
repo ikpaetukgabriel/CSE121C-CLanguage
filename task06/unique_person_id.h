@@ -4,5 +4,5 @@
 
 #ifndef TASK06_UNIQUE_PERSON_ID_H
 #define TASK06_UNIQUE_PERSON_ID_H
-char *generate_unique_person_id();
+int generate_unique_person_id();
 #endif //TASK06_UNIQUE_PERSON_ID_H

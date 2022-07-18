@@ -75,7 +75,7 @@ void populate_person_info(struct person *ptr_struct_person, bool is_a_new_person
         ptr_struct_person->father = NULL;
         ptr_struct_person->spouse = NULL;
         // Might be a good idea, to free up the pointer space, not done though
-        strcpy(ptr_struct_person->person_id, generate_unique_person_id());
+        ptr_struct_person->person_id = generate_unique_person_id();
     }
 
     printf("Enter the first name of the person: ");
@@ -102,7 +102,7 @@ void display_person_info(struct person *ptr_struct_person) {
         return;
     }
     printf("Person information->\n");
-    printf("Person ID: %s\n", ptr_struct_person->person_id);
+    printf("Person ID: %d\n", ptr_struct_person->person_id);
     printf("Firstname: %s\n", ptr_struct_person->first_name);
     printf("Lastname: %s\n", ptr_struct_person->last_name);
     printf("Gender: %s\n", get_gender_string(ptr_struct_person->gender));

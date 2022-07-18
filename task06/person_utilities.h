@@ -34,4 +34,8 @@ struct person *add_root_user(struct person *ptr_person_root_user);
 void display_person_info(struct person *ptr_struct_person);
 
 struct person *edit_root_user_info(struct person *ptr_person_root_user);
+
+struct person *add_relatives(struct person *ptr_person, int *ptr_num_of_relatives, int ALLOWED_NUM_RELATIVES);
+
+bool add_more_relatives(struct person *ptr_person);
 #endif //TASK06_PERSON_UTILITIES_H

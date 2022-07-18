@@ -7,6 +7,10 @@ int main() {
     int interface_choice;
     struct person *root_person = NULL;
 
+    const int ALLOWED_NUMBER_OF_RELATIVES = 6;
+    int num_of_relatives = 0;
+    int *ptr_num_of_relatives = &num_of_relatives;
+
     do {
         interface_choice = getUserInterfaceChoice();
         if (interface_choice == 1) {
@@ -26,6 +30,7 @@ int main() {
         }
 
         if (interface_choice == 4) {
+            root_person = add_relatives(root_person, ptr_num_of_relatives, ALLOWED_NUMBER_OF_RELATIVES);
             continue;
         }
 
@@ -42,6 +47,12 @@ int main() {
         }
 
         if (interface_choice == 8) {
+            continue;
+        }
+
+        if (interface_choice == 9) {
+            printf("Number of relatives added: %d\n", *ptr_num_of_relatives);
+            printf("Space for Number of relatives left: %d\n", ALLOWED_NUMBER_OF_RELATIVES - (*ptr_num_of_relatives));
             continue;
         }
 

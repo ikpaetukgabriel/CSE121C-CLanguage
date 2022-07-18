@@ -131,39 +131,37 @@ struct person *add_relatives(struct person *ptr_person, int *ptr_num_of_relative
         return ptr_person;
     }
 
-    if (*ptr_num_of_relatives > ALLOWED_NUM_RELATIVES) {
+    if (*ptr_num_of_relatives >= ALLOWED_NUM_RELATIVES) {
         printf("Number of Relatives exceeded \n");
         return ptr_person;
     }
+
+    struct person *mother;
+    struct person *father;
 
     // Since both have to be added then, this works great!
     // There should not exist a person with NULL mother and NOT NULL father, based on the design,
     // If it ever happens, then the program will treat it like both are NULLs
     if (ptr_person->mother != NULL && ptr_person->father != NULL) {
-        if (add_more_relatives(ptr_person->mother)) {
-            add_relatives(ptr_person->mother, ptr_num_of_relatives, ALLOWED_NUM_RELATIVES);
-        }
-        if (add_more_relatives(ptr_person->father)) {
-            add_relatives(ptr_person->father, ptr_num_of_relatives, ALLOWED_NUM_RELATIVES);
-        }
-        return ptr_person;
+        mother = ptr_person->mother;
+        father = ptr_person->father;
+    } else {
+        //   Mother
+        mother = allocate_space_for_new_person();
+        printf("Add %s, %s's Mother\n", ptr_person->last_name, ptr_person->first_name);
+        populate_person_info(mother, true);
+        printf("\n");
+        ptr_person->mother = mother;
+        (*ptr_num_of_relatives)++; // The value pointed at by ptr is incremented
+
+        //   Father
+        father = allocate_space_for_new_person();
+        printf("Add %s, %s's Father\n", ptr_person->last_name, ptr_person->first_name);
+        populate_person_info(father, true);
+        printf("\n");
+        ptr_person->father = father;
+        (*ptr_num_of_relatives)++; // The value pointed at by ptr is incremented
     }
-
-    //   Mother
-    struct person *mother = allocate_space_for_new_person();
-    printf("Add %s, %s's Mother\n", ptr_person->last_name, ptr_person->first_name);
-    populate_person_info(mother, true);
-    printf("\n");
-    ptr_person->mother = mother;
-    (*ptr_num_of_relatives)++; // The value pointed at by ptr is incremented
-
-    //   Father
-    struct person *father = allocate_space_for_new_person();
-    printf("Add %s, %s's Father\n", ptr_person->last_name, ptr_person->first_name);
-    populate_person_info(father, true);
-    printf("\n");
-    ptr_person->father = father;
-    (*ptr_num_of_relatives)++; // The value pointed at by ptr is incremented
 
     if (add_more_relatives(mother)) {
         add_relatives(mother, ptr_num_of_relatives, ALLOWED_NUM_RELATIVES);
@@ -171,7 +169,6 @@ struct person *add_relatives(struct person *ptr_person, int *ptr_num_of_relative
     if (add_more_relatives(father)) {
         add_relatives(father, ptr_num_of_relatives, ALLOWED_NUM_RELATIVES);
     }
-
     return ptr_person;
 }
 

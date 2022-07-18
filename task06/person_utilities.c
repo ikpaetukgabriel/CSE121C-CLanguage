@@ -111,7 +111,7 @@ void display_person_info(struct person *ptr_struct_person) {
 bool add_more_relatives(struct person *ptr_person) {
     int choice;
     do {
-        printf("Do you want to add %s, %s relatives?\n", ptr_person->first_name, ptr_person->last_name);
+        printf("Do you want to add %s, %s parents?\n", ptr_person->first_name, ptr_person->last_name);
         printf("Enter\n"
                "1 for yes\n"
                "2 for No\n"

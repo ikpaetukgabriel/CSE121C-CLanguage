@@ -34,6 +34,8 @@ struct person *add_root_user(struct person *ptr_person_root_user);
 
 void display_person_info(struct person *ptr_struct_person);
 
+struct person *edit_root_user_info(struct person *ptr_person_root_user);
+
 
 int main() {
     int interface_choice;
@@ -53,6 +55,7 @@ int main() {
         }
 
         if (interface_choice == 3) {
+            root_person = edit_root_user_info(root_person);
             continue;
         }
 
@@ -129,6 +132,20 @@ struct person *add_root_user(struct person *ptr_person_root_user) {
     return ptr_person_root_user;
 }
 
+struct person *edit_root_user_info(struct person *ptr_person_root_user) {
+    if (ptr_person_root_user == NULL) {
+        printf("No root user found, add root user!\n");
+        return ptr_person_root_user;
+    }
+    printf("Most current info: \n");
+    display_person_info(ptr_person_root_user);
+    printf("\n");
+    printf("Edit info below: \n");
+    populate_person_info(ptr_person_root_user, false);
+    printf("***Successfully updated!*** \n");
+    return ptr_person_root_user;
+}
+
 void populate_person_info(struct person *ptr_struct_person, bool is_a_new_person) {
     if (is_a_new_person) {
         ptr_struct_person->mother = NULL;
@@ -148,7 +165,7 @@ void populate_person_info(struct person *ptr_struct_person, bool is_a_new_person
     do {
         printf("Enter the gender of the person: ");
         scanf("%s", gender);
-        if(strcmp("Male", gender) == 0 || strcmp("Female", gender) == 0) break;
+        if (strcmp("Male", gender) == 0 || strcmp("Female", gender) == 0) break;
         printf("       Wrong input, enter 'Male' or 'Female' \n");
     } while (true);
 
@@ -157,6 +174,10 @@ void populate_person_info(struct person *ptr_struct_person, bool is_a_new_person
 }
 
 void display_person_info(struct person *ptr_struct_person) {
+    if (ptr_struct_person == NULL) {
+        printf("Person not found!\n");
+        return;
+    }
     printf("Person information->\n");
     printf("Person ID: %s\n", ptr_struct_person->person_id);
     printf("Firstname: %s\n", ptr_struct_person->first_name);

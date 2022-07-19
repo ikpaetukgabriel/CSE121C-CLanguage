@@ -27,3 +27,4 @@ cmake-build-debug/
 # videos
 *.mov
 *.idea
+.docx

@@ -240,7 +240,7 @@ struct person *find_relative_by_names(struct person *ptr_person, char firstname[
     }
 
     if (strcmp(ptr_person->first_name, firstname) == 0 &&
-        strcmp(ptr_person->first_name, firstname) == 0) {
+        strcmp(ptr_person->last_name, lastname) == 0) {
         return ptr_person;
     }
 
@@ -290,4 +290,12 @@ void find_relative(struct person *ptr_person) {
         printf("Edit information below \n");
         populate_person_info(result, false);
     }
+}
+void deallocate(struct person *ptr_root_person) {
+    if (ptr_root_person == NULL) {
+        return;
+    }
+    deallocate(ptr_root_person->mother);
+    deallocate(ptr_root_person->father);
+    free(ptr_root_person);
 }

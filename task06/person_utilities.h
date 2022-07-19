@@ -41,7 +41,9 @@ bool add_more_relatives(struct person *ptr_person);
 
 void display_family_tree(struct person *ptr_person_root_user);
 
-struct person* find_relative_by_names(struct person *ptr_person, char firstname[], char lastname[]);
+struct person* find_relative_by_firstname(struct person *ptr_person, char firstname[]);
 
 void find_relative(struct person *ptr_person);
+
+void deallocate(struct person *ptr_root_person);
 #endif //TASK06_PERSON_UTILITIES_H

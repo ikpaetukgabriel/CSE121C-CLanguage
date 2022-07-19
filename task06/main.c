@@ -51,6 +51,9 @@ int main() {
             continue;
         }
 
+        // free up the memory used by the record and Quits the program
+        deallocate(root_person);
+
         printf("Bye, thanks for using the family tree Application!\n");
         break;
 

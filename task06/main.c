@@ -7,7 +7,7 @@ int main() {
     int interface_choice;
     struct person *root_person = NULL;
 
-    const int ALLOWED_NUMBER_OF_RELATIVES = 6;
+    const int ALLOWED_NUMBER_OF_RELATIVES = 6; // Should be an even number for design reasons
     int num_of_relatives = 0;
     int *ptr_num_of_relatives = &num_of_relatives;
 

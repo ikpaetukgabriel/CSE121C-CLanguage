@@ -9,11 +9,21 @@
 #include "unique_person_id.h"
 #include "display_tree.h"
 
+/**
+ * Get the string equivalent of a gender enum
+ * @param enumVal
+ * @return
+ */
 const char *get_gender_string(int enumVal) {
     if (enumVal == 0) return "Male";
     else return "Female";
 }
 
+/**
+ * Gets the enum gender equivalent of a string
+ * @param str_gender
+ * @return
+ */
 enum gender get_gender_enum(char *str_gender) {
     if (strcmp("Male", str_gender) == 0) {
         return Male;
@@ -21,6 +31,10 @@ enum gender get_gender_enum(char *str_gender) {
     return Female;
 }
 
+/**
+ * Displays menu
+ * @return
+ */
 int getUserInterfaceChoice() {
     int interface_choice;
     printf("-------------------------------------------------------------\n");
@@ -29,7 +43,7 @@ int getUserInterfaceChoice() {
            "  3. Edit Root User Information\n"
            "  4. Add Relatives\n"
            "  5. Display Relatives\n"
-           "  6. Find Relative by Firstname and Lastname & Edit if needed\n"
+           "  6. Finds and edit(optional) Relative by Firstname and Lastname\n"
            "  7. See Number of relative added\n"
            "  0. Quit program\n");
     printf("-------------------------------------------------------------\n");
@@ -39,11 +53,19 @@ int getUserInterfaceChoice() {
     return interface_choice;
 }
 
-
+/**
+ * Dynamically allocates memory for a person struct
+ * @return
+ */
 struct person *allocate_space_for_new_person() {
     return malloc(sizeof(struct person));
 }
 
+/**
+ * Add root user(person)
+ * @param ptr_person_root_user
+ * @return
+ */
 struct person *add_root_user(struct person *ptr_person_root_user) {
     if (ptr_person_root_user != NULL) {
         printf("Root user already exists!");
@@ -54,6 +76,11 @@ struct person *add_root_user(struct person *ptr_person_root_user) {
     return ptr_person_root_user;
 }
 
+/**
+ * Edit root user info
+ * @param ptr_person_root_user
+ * @return
+ */
 struct person *edit_root_user_info(struct person *ptr_person_root_user) {
     if (ptr_person_root_user == NULL) {
         printf("No root user found, add root user!\n");
@@ -68,6 +95,11 @@ struct person *edit_root_user_info(struct person *ptr_person_root_user) {
     return ptr_person_root_user;
 }
 
+/**
+ * Populates a person info
+ * @param ptr_struct_person
+ * @param is_a_new_person
+ */
 void populate_person_info(struct person *ptr_struct_person, bool is_a_new_person) {
     if (is_a_new_person) {
         ptr_struct_person->mother = NULL;
@@ -95,6 +127,10 @@ void populate_person_info(struct person *ptr_struct_person, bool is_a_new_person
     ptr_struct_person->gender = get_gender_enum(gender);
 }
 
+/**
+ * Displays a particular person info
+ * @param ptr_struct_person
+ */
 void display_person_info(struct person *ptr_struct_person) {
     if (ptr_struct_person == NULL) {
         printf("Person not found!\n");
@@ -106,7 +142,11 @@ void display_person_info(struct person *ptr_struct_person) {
     printf("Lastname: %s\n", ptr_struct_person->last_name);
     printf("Gender: %s\n", get_gender_string(ptr_struct_person->gender));
 }
-
+/**
+ * Prompts the user for the option to add more relatives
+ * @param ptr_person
+ * @return
+ */
 bool add_more_relatives(struct person *ptr_person) {
     int choice;
     do {
@@ -124,6 +164,14 @@ bool add_more_relatives(struct person *ptr_person) {
     } while (true);
 }
 
+/**
+ * Recursively adds relatives (parents) down the tree, until
+ * User stops it or the number of allowed relative is exceeded
+ * @param ptr_person
+ * @param ptr_num_of_relatives
+ * @param ALLOWED_NUM_RELATIVES
+ * @return
+ */
 struct person *add_relatives(struct person *ptr_person, int *ptr_num_of_relatives, const int ALLOWED_NUM_RELATIVES) {
     if (ptr_person == NULL) {
         printf("No root user found, add root user \n");
@@ -171,11 +219,21 @@ struct person *add_relatives(struct person *ptr_person, int *ptr_num_of_relative
     return ptr_person;
 }
 
+/**
+ * Displays the relative in a family tree format
+ * @param ptr_person_root_user
+ */
 void display_family_tree(struct person *ptr_person_root_user) {
     printTree(ptr_person_root_user, NULL, false);
 }
 
-
+/**
+ * Recursively finds relative by firstname and lastname
+ * @param ptr_person
+ * @param firstname
+ * @param lastname
+ * @return
+ */
 struct person *find_relative_by_names(struct person *ptr_person, char firstname[], char lastname[]) {
     if (ptr_person == NULL) {
         return NULL;
@@ -195,6 +253,10 @@ struct person *find_relative_by_names(struct person *ptr_person, char firstname[
     return ptr_result_father_side != NULL ? ptr_result_father_side : ptr_result_mother_side;
 }
 
+/**
+ * Finds and edit(optional) relative
+ * @param ptr_person
+ */
 void find_relative(struct person *ptr_person) {
     char first_name[20];
     char last_name[20];

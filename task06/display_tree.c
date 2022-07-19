@@ -10,20 +10,29 @@
 #include "display_tree.h"
 
 
-// Helper function to print branches of the binary tree
-void showTrunks(struct Trunk *p)
+/**
+ * Helper function to print branches of the binary tree
+ * @param ptr_trunk
+ */
+void showTrunks(struct Trunk *ptr_trunk)
 {
-    if (p == NULL) {
+    if (ptr_trunk == NULL) {
         return;
     }
 
-    showTrunks(p->prev);
-    printf("%s",p->str);
+    showTrunks(ptr_trunk->prev);
+    printf("%s", ptr_trunk->str);
 }
 
-void printTree(struct person* root, struct Trunk *prev, bool isLeft)
+/**
+ * prints Family Tree, treats it like a binary tree
+ * @param ptr_person
+ * @param prev
+ * @param isLeft
+ */
+void printTree(struct person* ptr_person, struct Trunk *prev, bool isLeft)
 {
-    if (root == NULL) {
+    if (ptr_person == NULL) {
         return;
     }
 
@@ -32,7 +41,7 @@ void printTree(struct person* root, struct Trunk *prev, bool isLeft)
     trunk->prev = prev;
     strcpy(trunk->str, prev_str);
 
-    printTree(root->father, trunk, true);
+    printTree(ptr_person->father, trunk, true);
 
     if (!prev) {
         strcpy(trunk->str, "—————————");
@@ -48,12 +57,12 @@ void printTree(struct person* root, struct Trunk *prev, bool isLeft)
     }
 
     showTrunks(trunk);
-    printf("*%s, %c.\n", root->last_name, root->first_name[0]);
+    printf("*%s, %c.\n", ptr_person->last_name, ptr_person->first_name[0]);
 
     if (prev) {
         strcpy(prev->str, prev_str);
     }
     strcpy(trunk->str, "         |");
 
-    printTree(root->mother, trunk, false);
+    printTree(ptr_person->mother, trunk, false);
 }

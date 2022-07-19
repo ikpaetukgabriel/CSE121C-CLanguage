@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include "person_utilities.h"
 #include "unique_person_id.h"
+#include "display_tree.h"
 
 const char *get_gender_string(int enumVal) {
     if (enumVal == 0) return "Male";
@@ -22,18 +23,16 @@ enum gender get_gender_enum(char *str_gender) {
 
 int getUserInterfaceChoice() {
     int interface_choice;
-    printf("---------------------------------------------\n");
+    printf("-------------------------------------------------------------\n");
     printf("  1. Add Root User\n"
            "  2. Display Root User Info\n"
            "  3. Edit Root User Information\n"
            "  4. Add Relatives\n"
            "  5. Display Relatives\n"
-           "  6. Find Relative by Firstname and Lastname\n"
-           "  7. Find Relative by Person ID\n"
-           "  8. Edit Relative Information\n"
-           "  9. See Number of relative added\n"
+           "  6. Find Relative by Firstname and Lastname & Edit if needed\n"
+           "  7. See Number of relative added\n"
            "  0. Quit program\n");
-    printf("---------------------------------------------\n");
+    printf("-------------------------------------------------------------\n");
     printf("Your choice: ");
     scanf("%d", &interface_choice);
     printf("\n");
@@ -172,3 +171,61 @@ struct person *add_relatives(struct person *ptr_person, int *ptr_num_of_relative
     return ptr_person;
 }
 
+void display_family_tree(struct person *ptr_person_root_user) {
+    printTree(ptr_person_root_user, NULL, false);
+}
+
+
+struct person *find_relative_by_names(struct person *ptr_person, char firstname[], char lastname[]) {
+    if (ptr_person == NULL) {
+        return NULL;
+    }
+
+    if (strcmp(ptr_person->first_name, firstname) == 0 &&
+        strcmp(ptr_person->first_name, firstname) == 0) {
+        return ptr_person;
+    }
+
+    struct person *ptr_result_mother_side;
+    struct person *ptr_result_father_side;
+
+    ptr_result_mother_side = find_relative_by_names(ptr_person->mother, firstname, lastname);
+    ptr_result_father_side = find_relative_by_names(ptr_person->father, firstname, lastname);
+
+    return ptr_result_father_side != NULL ? ptr_result_father_side : ptr_result_mother_side;
+}
+
+void find_relative(struct person *ptr_person) {
+    char first_name[20];
+    char last_name[20];
+    int edit_choice;
+
+    printf("Firstname: ");
+    scanf("%s", first_name);
+    printf("Lastname: ");
+    scanf("%s", last_name);
+    printf("\n");
+
+    struct person *result = find_relative_by_names(ptr_person, first_name, last_name);
+    if (result == NULL) {
+        printf("Relative with firstname: %s and lastname: %s, not found.\n", first_name, last_name);
+        return;
+    }
+    display_person_info(result);
+    printf("\n");
+    do {
+        printf("Do you want to edit this relative information?.\n"
+               "1. For Yes\n"
+               "2. For No: \n"
+               ": ");
+        scanf("%d", &edit_choice);
+        if (edit_choice == 1 || edit_choice == 2) break;
+        printf("Wrong input, enter 1 or 2\n");
+    } while (true);
+
+    printf("\n");
+    if (edit_choice == 1) {
+        printf("Edit information below \n");
+        populate_person_info(result, false);
+    }
+}

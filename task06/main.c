@@ -35,22 +35,17 @@ int main() {
         }
 
         if (interface_choice == 5) {
+            display_family_tree(root_person);
             continue;
         }
 
         if (interface_choice == 6) {
+            find_relative(root_person);
+            printf("\n");
             continue;
         }
 
         if (interface_choice == 7) {
-            continue;
-        }
-
-        if (interface_choice == 8) {
-            continue;
-        }
-
-        if (interface_choice == 9) {
             printf("Number of relatives added: %d\n", *ptr_num_of_relatives);
             printf("Space for Number of relatives left: %d\n", ALLOWED_NUMBER_OF_RELATIVES - (*ptr_num_of_relatives));
             continue;

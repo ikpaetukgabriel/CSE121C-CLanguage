@@ -16,7 +16,7 @@ struct person {
     enum gender gender;
     struct person *mother;
     struct person *father;
-    struct person *spouse;
+    __attribute__((unused)) struct person *spouse; // Not yet implemented, hence the flag
 };
 
 const char *get_gender_string(int enumVal);

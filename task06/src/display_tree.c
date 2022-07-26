@@ -53,7 +53,7 @@ void printTree(struct person* ptr_person, struct Trunk *prev, bool isLeft)
     }
     else {
         strcpy(trunk->str, "`—————————");
-        stpcpy(prev->str, prev_str);
+        strcpy(prev->str, prev_str);
     }
 
     showTrunks(trunk);

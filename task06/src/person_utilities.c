@@ -104,7 +104,7 @@ void populate_person_info(struct person *ptr_struct_person, bool is_a_new_person
     if (is_a_new_person) {
         ptr_struct_person->mother = NULL;
         ptr_struct_person->father = NULL;
-        ptr_struct_person->spouse = NULL;
+        // ptr_struct_person->spouse = NULL;
         // Might be a good idea, to free up the pointer space, not done though
         ptr_struct_person->person_id = generate_unique_person_id();
     }

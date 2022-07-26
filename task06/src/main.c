@@ -1,3 +1,13 @@
+/*
+ ============================================================================
+ Name        : task06.c
+ Author      : Gabriel Ikpaetuk
+ Version     :
+ Copyright   : Your copyright notice
+ Description : Hello World in C, Ansi-style
+ ============================================================================
+ */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>

@@ -16,7 +16,7 @@ struct person {
     enum gender gender;
     struct person *mother;
     struct person *father;
-    __attribute__((unused)) struct person *spouse; // Not yet implemented, hence the flag
+   // struct person *spouse, // Not yet implemented, hence the flag
 };
 
 const char *get_gender_string(int enumVal);
@@ -41,7 +41,7 @@ bool add_more_relatives(struct person *ptr_person);
 
 void display_family_tree(struct person *ptr_person_root_user);
 
-struct person* find_relative_by_names(struct person *ptr_person, char firstname[]);
+struct person* find_relative_by_names(struct person *ptr_person, char firstname[], char lastname[]);
 
 void find_relative(struct person *ptr_person);
 
